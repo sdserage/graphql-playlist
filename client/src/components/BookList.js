@@ -5,6 +5,12 @@ import BookDetails from './BookDetails';
 
 
 class BookList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: null,
+    }
+  }
 
   displayBooks = () => {
     let data = this.props.data
@@ -12,7 +18,7 @@ class BookList extends Component {
       return(<div>Loading books...</div>);
     } else {
       return data.books.map((book, index) => (
-        <li key={index}>{book.name}</li>
+        <li onClick={() => this.setState({selected: book.id})} key={index}>{book.name}</li>
       ));
     }
   }
@@ -23,7 +29,7 @@ class BookList extends Component {
         <ul id="book-list">
           {this.displayBooks()}
         </ul>
-        <BookDetails />
+        <BookDetails bookId={this.state.selected}/>
       </div>
     );
   }
